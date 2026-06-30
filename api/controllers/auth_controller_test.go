@@ -97,7 +97,9 @@ func TestAuthFlow(t *testing.T) {
 		}
 
 		var respBody map[string]interface{}
-		json.NewDecoder(resp.Body).Decode(&respBody)
+		if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
+			t.Fatalf("Failed to decode response body: %v", err)
+		}
 		if respBody["email"] != testStudentEmail {
 			t.Errorf("Expected registered email to be %s, got %v", testStudentEmail, respBody["email"])
 		}
@@ -170,7 +172,9 @@ func TestAuthFlow(t *testing.T) {
 		body, _ := json.Marshal(regPayload)
 		req := httptest.NewRequest("POST", "/api/auth/register", bytes.NewBuffer(body))
 		req.Header.Set("Content-Type", "application/json")
-		app.Test(req)
+		if _, err := app.Test(req); err != nil {
+			t.Fatalf("Failed to execute register request: %v", err)
+		}
 
 		// Get OTP code from SQLite
 		var otp models.OTP
@@ -199,7 +203,9 @@ func TestAuthFlow(t *testing.T) {
 		}
 
 		var respBody map[string]interface{}
-		json.NewDecoder(resp.Body).Decode(&respBody)
+		if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
+			t.Fatalf("Failed to decode response body: %v", err)
+		}
 		if respBody["access_token"] == nil {
 			t.Error("Expected access token in response, got nil")
 		}
@@ -238,7 +244,9 @@ func TestAuthFlow(t *testing.T) {
 		}
 
 		var capBody map[string]interface{}
-		json.NewDecoder(capResp.Body).Decode(&capBody)
+		if err := json.NewDecoder(capResp.Body).Decode(&capBody); err != nil {
+			t.Fatalf("Failed to decode captcha response: %v", err)
+		}
 		captchaID := capBody["captcha_id"].(string)
 		question := capBody["question"].(string)
 
@@ -302,7 +310,9 @@ func TestAuthFlow(t *testing.T) {
 		}
 
 		var sBodyMap map[string]interface{}
-		json.NewDecoder(sResp.Body).Decode(&sBodyMap)
+		if err := json.NewDecoder(sResp.Body).Decode(&sBodyMap); err != nil {
+			t.Fatalf("Failed to decode login response: %v", err)
+		}
 		accessToken := sBodyMap["access_token"].(string)
 
 		// D. Profile Access - Unauthenticated
@@ -327,7 +337,9 @@ func TestAuthFlow(t *testing.T) {
 		}
 
 		var profBody map[string]interface{}
-		json.NewDecoder(profRespAuth.Body).Decode(&profBody)
+		if err := json.NewDecoder(profRespAuth.Body).Decode(&profBody); err != nil {
+			t.Fatalf("Failed to decode profile response: %v", err)
+		}
 		studentData := profBody["student"].(map[string]interface{})
 		if studentData["email_id"] != "alice@example.com" {
 			t.Errorf("Expected profile email to be alice@example.com, got %v", studentData["email_id"])
