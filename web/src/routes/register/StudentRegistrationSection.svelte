@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, slide } from 'svelte/transition';
 	import { goto } from '$app/navigation';
+	import { API_BASE_URL } from '$lib/config';
 
 	const formId = 'student-reg';
 
@@ -119,7 +120,7 @@
 		errorMessage = '';
 
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/verify-otp', {
+			const response = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -187,7 +188,7 @@
 		errorMessage = '';
 
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/register', {
+			const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

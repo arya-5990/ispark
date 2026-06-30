@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, slide } from 'svelte/transition';
 	import { goto } from '$app/navigation';
+	import { API_BASE_URL } from '$lib/config';
 
 	const formId = 'student-login';
 
@@ -80,7 +81,7 @@
 	async function fetchCaptcha() {
 		captchaLoading = true;
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/captcha');
+			const response = await fetch(`${API_BASE_URL}/api/auth/captcha`);
 			if (response.ok) {
 				const data = await response.json();
 				captchaID = data.captcha_id;
@@ -108,7 +109,7 @@
 		errorMsg = '';
 
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/login', {
+			const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -153,7 +154,7 @@
 		errorMsg = '';
 
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/forgot-password', {
+			const response = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -194,7 +195,7 @@
 		errorMsg = '';
 
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/reset-password', {
+			const response = await fetch(`${API_BASE_URL}/api/auth/reset-password`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

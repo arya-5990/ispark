@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
+	import { API_BASE_URL } from '$lib/config';
 
 	// Define interface for navigation links
 	interface NavItem {
@@ -40,7 +41,7 @@
 		}
 
 		try {
-			const response = await fetch('http://localhost:8080/api/auth/profile', {
+			const response = await fetch(`${API_BASE_URL}/api/auth/profile`, {
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${token}`
@@ -76,7 +77,7 @@
 
 		if (token) {
 			try {
-				await fetch('http://localhost:8080/api/auth/logout', {
+				await fetch(`${API_BASE_URL}/api/auth/logout`, {
 					method: 'POST',
 					headers: {
 						Authorization: `Bearer ${token}`
