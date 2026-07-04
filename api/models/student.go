@@ -16,6 +16,7 @@ type Student struct {
 	EnrollmentNo string         `gorm:"type:varchar(50);uniqueIndex;not null" json:"enrollment_no"`
 	Password     string         `gorm:"type:varchar(255);not null" json:"-"` // "-" hides password from json marshalling
 	IsVerified   bool           `gorm:"default:false" json:"is_verified"`
+	Role         string         `gorm:"type:varchar(20);default:'student'" json:"role"`
 	CreatedAt    time.Time      `json:"created_at"`
 	UpdatedAt    time.Time      `json:"updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`

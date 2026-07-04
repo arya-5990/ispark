@@ -221,14 +221,14 @@ func VerifyOTP(c *fiber.Ctx) error {
 	config.DB.Delete(&otp)
 
 	// Automatically log the user in
-	accessToken, err := utils.GenerateAccessToken(student.RollNo, student.EmailID, "student")
+	accessToken, err := utils.GenerateAccessToken(student.RollNo, student.EmailID, student.Role)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to generate access token",
 		})
 	}
 
-	refreshToken, err := utils.GenerateRefreshToken(student.RollNo, student.EmailID, "student")
+	refreshToken, err := utils.GenerateRefreshToken(student.RollNo, student.EmailID, student.Role)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to generate refresh token",
@@ -330,14 +330,14 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	// Generate Tokens
-	accessToken, err := utils.GenerateAccessToken(student.RollNo, student.EmailID, "student")
+	accessToken, err := utils.GenerateAccessToken(student.RollNo, student.EmailID, student.Role)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to generate access token",
 		})
 	}
 
-	refreshToken, err := utils.GenerateRefreshToken(student.RollNo, student.EmailID, "student")
+	refreshToken, err := utils.GenerateRefreshToken(student.RollNo, student.EmailID, student.Role)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to generate refresh token",
@@ -570,6 +570,7 @@ func GetProfile(c *fiber.Ctx) error {
 			"contact_no":    student.ContactNo,
 			"enrollment_no": student.EnrollmentNo,
 			"is_verified":   student.IsVerified,
+			"role":          student.Role,
 			"created_at":    student.CreatedAt,
 			"updated_at":    student.UpdatedAt,
 		},
