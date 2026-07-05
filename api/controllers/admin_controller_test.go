@@ -300,7 +300,7 @@ func TestSuperAdminModule(t *testing.T) {
 		if len(report) != 1 {
 			t.Errorf("Expected 1 student in report, got %d", len(report))
 		}
-		
+
 		totalCredits := report[0]["total_credits"].(float64)
 		if totalCredits != 20 {
 			t.Errorf("Expected student's total credits to be 20, got %f", totalCredits)

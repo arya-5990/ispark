@@ -38,7 +38,7 @@ func SetupRoutes(app *fiber.App) {
 
 	// Admin route group (Require admin/superadmin roles)
 	admin := api.Group("/admin", middleware.AuthRequired(), middleware.RoleRequired("admin", "superadmin"))
-	
+
 	// Dashboard
 	admin.Get("/dashboard", controllers.GetAdminDashboard)
 
@@ -46,7 +46,7 @@ func SetupRoutes(app *fiber.App) {
 	admin.Get("/users", controllers.GetUsers)
 	admin.Get("/users/:roll_no", controllers.GetUserDetail)
 	admin.Put("/users/:roll_no/verify", controllers.VerifyUser)
-	
+
 	// User Management (Superadmin Only)
 	admin.Put("/users/:roll_no/role", middleware.RoleRequired("superadmin"), controllers.UpdateUserRole)
 	admin.Delete("/users/:roll_no", middleware.RoleRequired("superadmin"), controllers.DeleteUser)

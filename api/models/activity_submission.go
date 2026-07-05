@@ -14,7 +14,7 @@ type ActivitySubmission struct {
 	Category       string         `gorm:"type:varchar(50);not null" json:"category"`
 	Description    string         `gorm:"type:text" json:"description"`
 	CertificateURL string         `gorm:"type:varchar(255)" json:"certificate_url"`
-	Credits        int            `gorm:"not null" json:"credits"` // credits requested initially / approved eventually
+	Credits        int            `gorm:"not null" json:"credits"`                          // credits requested initially / approved eventually
 	Status         string         `gorm:"type:varchar(20);default:'pending'" json:"status"` // 'pending', 'approved', 'rejected'
 	Remarks        string         `gorm:"type:text" json:"remarks"`
 	VerifiedBy     string         `gorm:"type:varchar(100)" json:"verified_by"`
